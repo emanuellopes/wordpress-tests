@@ -1,0 +1,21 @@
+version: '3.4'
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: testdrive
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+  wordpresstests:
+    build:
+      context: .
+      dockerfile: 'Dockerfile'
+      target: php
+    environment:
+      wp__DB__host: db:3306
+      wp__DB__username: user
+      wp__DB__password: password
+      wp__DB__name: wordpress
+    volumes:
+      - ./theme:/theme
